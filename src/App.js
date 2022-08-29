@@ -1,25 +1,41 @@
-import logo from './logo.svg';
-import './App.css';
+import './assets/css/App.css';
+import Header from './components/Header';
+import { Route, Routes } from 'react-router-dom';
+import React, { Component } from 'react'
+import { Col, Row, Container } from 'react-bootstrap'
+import LeftFrame from './components/LeftFrame';
+import EntryComponent from './components/EntryComponent';
+import EntryDetail from './components/EntryDetail';
+import Footer from './components/Footer';
+import EntrySingle from './components/EntrySingle';
+import UserSearch from './components/UserSearch';
+import NotFound from './components/NotFound';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+export default class App extends Component {
+  render() {
+    return (
+      <div className="App">
+        <Header />
+        <Container className="mt-3">
+          <Row>
+            <Col lg={3} xs={12} md={12} className="l">
+              <Routes>
+                <Route path="/*" element={<LeftFrame />} />
+              </Routes>
+            </Col>
+            <Col lg={9} xs={12} md={12} className="l">
+              <Routes>
+              <Route path="/" element={<EntryComponent />} />
+                <Route path="baslik/:slug" element={<EntryDetail />} />
+                <Route path="entry/:id" element={<EntrySingle />} />
+                <Route path="biri/:author" element={<UserSearch />} />
+                <Route path="*" element={<NotFound />}> 404 not found</Route>
+              </Routes>
+            </Col>
+            <Footer/>
+          </Row>
+        </Container>
+      </div>
+    );
+  }
 }
-
-export default App;

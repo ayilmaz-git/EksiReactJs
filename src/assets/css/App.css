@@ -1,0 +1,38 @@
+*::after{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.l::-webkit-scrollbar {
+  display: none;
+}
+body{
+  font-size: 15px;
+}
+.left-frame{
+  text-decoration: none;
+}
+.leftFrameScroll{
+  border: none!important;
+}
+.left{
+  border: none!important;
+}
+.card{
+  border: none!important;
+}
+.l{
+  overflow:scroll;
+   height:800px;
+}
+.text-success{
+  text-decoration: none;
+}
+a{
+  font-weight: bolder;
+  text-decoration: none;
+  color: #333333;
+}
+.link{
+  font-weight: 400;
+}
