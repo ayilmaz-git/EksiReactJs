@@ -1,14 +1,14 @@
 {
   "files": {
-    "main.css": "/eksireactjs/static/css/main.8bf42571.css",
-    "main.js": "/eksireactjs/static/js/main.e114c28a.js",
+    "main.css": "/eksireactjs/static/css/main.34801750.css",
+    "main.js": "/eksireactjs/static/js/main.a08b5051.js",
     "static/media/eksi.png": "/eksireactjs/static/media/eksi.5414e5d080ff6831a086.png",
     "index.html": "/eksireactjs/index.html",
-    "main.8bf42571.css.map": "/eksireactjs/static/css/main.8bf42571.css.map",
-    "main.e114c28a.js.map": "/eksireactjs/static/js/main.e114c28a.js.map"
+    "main.34801750.css.map": "/eksireactjs/static/css/main.34801750.css.map",
+    "main.a08b5051.js.map": "/eksireactjs/static/js/main.a08b5051.js.map"
   },
   "entrypoints": [
-    "static/css/main.8bf42571.css",
-    "static/js/main.e114c28a.js"
+    "static/css/main.34801750.css",
+    "static/js/main.a08b5051.js"
   ]
 }
