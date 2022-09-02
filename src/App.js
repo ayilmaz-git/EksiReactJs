@@ -5,11 +5,11 @@ import React, { Component } from 'react'
 import { Col, Row, Container } from 'react-bootstrap'
 import LeftFrame from './components/LeftFrame';
 import EntryComponent from './components/EntryComponent';
-import EntryDetail from './components/EntryDetail';
 import Footer from './components/Footer';
 import EntrySingle from './components/EntrySingle';
 import UserSearch from './components/UserSearch';
 import NotFound from './components/NotFound';
+import EntryDetail from './components/EntryDetail';
 
 export default class App extends Component {
   render() {

@@ -9,7 +9,7 @@ const reducers = combineReducers({
     allDebes: selectedDebeReducer,
     debes: debeReducer,
     users: userReducer,
-    allUsers: selectedUserReducer
+    allUsers: selectedUserReducer,
 });
 
 

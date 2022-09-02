@@ -16,7 +16,7 @@ import { Link } from 'react-router-dom';
 function EntryComponent() {
   const navigate = useNavigate();
   const entry = useSelector((state) => state.entry);
-  const { title, total_page, tags } = entry;
+  const { body, title, total_page, tags } = entry;
   const dispatch = useDispatch();
 
   const fetchEntryDetail = async () => {
@@ -28,8 +28,11 @@ function EntryComponent() {
   useEffect(() => {
     fetchEntryDetail();
   }, [])
+
   return (
-    <div>
+     <div>
+    {Object.keys(body).length === 0 ?
+      <div>
       {Object.keys(entry).length === 0 ? (
         <div className='text-secondary text-center'><h4>...loading</h4></div>
       ) : (
@@ -38,6 +41,7 @@ function EntryComponent() {
             <Card.Body>
               <Row>
                 <Col lg={10}>
+
                   <Card.Title><h3>{title}</h3></Card.Title>
                 </Col>
                 <Col lg={2}>
@@ -89,6 +93,8 @@ function EntryComponent() {
           </Card>
         </div>
       )}
+    </div>
+     : <p>olmaz olsun böyle başlık</p>}
     </div>
   )
 }

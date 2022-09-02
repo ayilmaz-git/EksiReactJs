@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
@@ -11,24 +11,31 @@ import DropdownButton from 'react-bootstrap/DropdownButton';
 import Dropdown from 'react-bootstrap/Dropdown';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import { Link } from 'react-router-dom';
+import ReactPaginate from 'react-paginate';
 
 
 function EntryDetail() {
   const entry = useSelector((state) => state.entry);
   const { title, total_page, tags } = entry;
   const { slug } = useParams();
+  const [items, setItems] = useState([]);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  const fetchEntryDetail = async () => {
-    const response = await axios.get(`https://eksisozluk-api.herokuapp.com/api/baslik/${slug}?a=dailynice`).catch(err => {
+  const fetchEntryDetail = async (currentPage) => {
+    const response = await axios.get(`
+    https://eksisozluk-api.herokuapp.com/api/baslik/${slug}?a=popular&p=${currentPage}`).catch(err => {
       console.log("Err", err);
     });
     dispatch(selectedEntrys(response.data));
   };
   useEffect(() => {
-    if (slug && slug !== "")fetchEntryDetail();
+    if (slug && slug !== "") fetchEntryDetail();
   }, [slug]);
+  const handleClicked = async (data) => {
+    let currentPage = data.selected + 1;
+    const commentFromServer = await fetchEntryDetail(currentPage)
+    setItems = (commentFromServer);
+  }
   return (
     <div>
       {Object.keys(entry).length === 0 ? (
@@ -38,23 +45,34 @@ function EntryDetail() {
           <Card>
             <Card.Body>
               <Row>
+                <ReactPaginate
+                  breakLabel="..."
+                  nextLabel=">"
+                  pageRangeDisplayed={2}
+                  marginPagesDisplayed={2}
+                  pageCount={total_page}
+                  previousLabel="<"
+                  onPageChange={handleClicked}
+                  containerClassName={"pagination justify-content-center"}
+                  pageClassName={"page-item"}
+                  pageLinkClassName={"page-link"}
+                  previousClassName={"page-item"}
+                  nextClassName={"page-item"}
+                  nextLinkClassName={"page-link"}
+                  previousLinkClassName={"page-link"}
+                  breakClassName={"page-item"}
+                  breakLinkClassName={"page-link"}
+                  activeClassName={"active"}
+                />
                 <Col lg={10}>
                   <Card.Title><h3>{title}</h3></Card.Title><br />
                 </Col>
                 <Col lg={2}>
-                  <ButtonGroup size="sm">
-                    <DropdownButton size="sm" variant="light" as={ButtonGroup} title="1" id="bg-nested-dropdown">
-                      <Dropdown.Item eventKey="{total_page}">{total_page}</Dropdown.Item>
-                    </DropdownButton>
-                    <Button size="sm" variant="light"><Link to={`?a=popular&p=${total_page}`}>{total_page}</Link></Button>
-                    <Button size="sm" variant="light">></Button>
-                  </ButtonGroup>
+                  {tags ? <small> kanal: {tags.toString()}</small> : <p></p>}
                 </Col>
-                {tags ? <em>{tags.toString()}</em> : <p></p>}
-
               </Row>
               {entry.entries.map((entry) => {
-            
+
                 const { id, body, fav_count, author, created_at, updated_at } = entry;
                 function contentClickHandler(e) {
                   e.target.closest('a');
@@ -63,9 +81,9 @@ function EntryDetail() {
                     let query = e.target.search.split("?q=")[1];
                     query = query.replaceAll("+", " ");
                     query = "baslik/" + query;
-                     // this.props.history.push(e.target.href)
-                     navigate("/" + query);
-                      }
+                    // this.props.history.push(e.target.href)
+                    navigate("/" + query);
+                  }
                 };
                 return (
                   <div className='mt-5'>

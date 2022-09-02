@@ -23,7 +23,7 @@ function LeftFrame() {
     }, [entrys]);
     return (
         <div>
-            <Link to="/">
+            <Link to="/eksireactjs">
                 <Card className="text-center">
                     <Button disabled variant="outline-success" size="sm">
                         <em>gündem</em>
