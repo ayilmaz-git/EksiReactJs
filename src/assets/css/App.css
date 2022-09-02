@@ -4,13 +4,16 @@
   box-sizing: border-box;
 }
 .l::-webkit-scrollbar {
-  display: none;
+  display: none!important;
 }
 body{
   font-size: 15px;
 }
 .left-frame{
   text-decoration: none;
+}
+.left-frame::-webkit-scrollbar {
+  display: none;
 }
 .leftFrameScroll{
   border: none!important;

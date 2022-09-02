@@ -53,7 +53,7 @@ function EntryDetail() {
                   pageCount={total_page}
                   previousLabel="<"
                   onPageChange={handleClicked}
-                  containerClassName={"pagination justify-content-center"}
+                  containerClassName={"pagination pagination-sm justify-content-center"}
                   pageClassName={"page-item"}
                   pageLinkClassName={"page-link"}
                   previousClassName={"page-item"}
