@@ -6,32 +6,36 @@ import { selectedEntrys } from '../redux/actions/entryActions';
 import Card from 'react-bootstrap/Card';
 import { Col, Row } from 'react-bootstrap';
 import { TbDroplet } from 'react-icons/tb';
-import Button from 'react-bootstrap/Button';
-import DropdownButton from 'react-bootstrap/DropdownButton';
-import Dropdown from 'react-bootstrap/Dropdown';
-import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import { Link } from 'react-router-dom';
+import ReactPaginate from 'react-paginate';
 
 
 function EntryComponent() {
   const navigate = useNavigate();
   const entry = useSelector((state) => state.entry);
-  const { body, title, total_page, tags } = entry;
+  const { title, total_page, tags } = entry;
+  const PageNumbers = "";  
+
   const dispatch = useDispatch();
 
-  const fetchEntryDetail = async () => {
-    const response = await axios.get(`https://eksisozluk-api.herokuapp.com/api/baslik/eksi-sozluk--31966?a=nice`).catch(err => {
+  const fetchEntryDetail = async (currentPage) => {
+    const response = await 
+    axios.get(`https://eksisozluk-api.herokuapp.com/api/baslik/eksi-sozluk--31966?a=&p=${currentPage}`).catch(err => {
       console.log("Err", err);
     });
     dispatch(selectedEntrys(response.data));
   };
+  const handleClicked = async (data) => {
+    let currentPage = data.selected + 1;
+    const commentFromServer = await fetchEntryDetail(currentPage);
+    PageNumbers = (commentFromServer);
+  }
   useEffect(() => {
     fetchEntryDetail();
   }, [])
 
   return (
      <div>
-    {Object.keys(body).length === 0 ?
       <div>
       {Object.keys(entry).length === 0 ? (
         <div className='text-secondary text-center'><h4>...loading</h4></div>
@@ -40,21 +44,41 @@ function EntryComponent() {
           <Card>
             <Card.Body>
               <Row>
+              <ReactPaginate
+                  breakLabel="..."
+                  nextLabel=">"
+                  pageRangeDisplayed={2}
+                  marginPagesDisplayed={2}
+                  pageCount={total_page}
+                  previousLabel="<"
+                  onPageChange={handleClicked}
+                  containerClassName={"pagination pagination-sm justify-content-center"}
+                  pageClassName={"page-item"}
+                  pageLinkClassName={"page-link"}
+                  previousClassName={"page-item"}
+                  nextClassName={"page-item"}
+                  nextLinkClassName={"page-link"}
+                  previousLinkClassName={"page-link"}
+                  breakClassName={"page-item"}
+                  breakLinkClassName={"page-link"}
+                  activeClassName={"active"}
+                  onClick={(clickEvent) => {
+                    console.log('onClick', clickEvent);
+                    // Return false to prevent standard page change,
+                    // return false; // --> Will do nothing.
+                    // return a number to choose the next page,
+                    // return 4; --> Will go to page 5 (index 4)
+                    // return nothing (undefined) to let standard behavior take place.
+                  }}
+                />
                 <Col lg={10}>
 
                   <Card.Title><h3>{title}</h3></Card.Title>
                 </Col>
                 <Col lg={2}>
-                  <ButtonGroup size="sm">
-                    <DropdownButton size="sm" variant="light" as={ButtonGroup} title="1" id="bg-nested-dropdown">
-                      <Dropdown.Item eventKey="{total_page}">{total_page}</Dropdown.Item>
-                    </DropdownButton>
-                    <Button size="sm" variant="light">{total_page}</Button>
-                    <Button size="sm" variant="light">></Button>
-                  </ButtonGroup>
-                </Col>
-                {tags ? <em>{tags.toString()}</em> : <p></p>}
+                {tags ? <small> kanal: {tags.toString()}</small> : <p></p>}
 
+                </Col>
               </Row>
               {entry.entries.map((entry) => {
                 
@@ -94,7 +118,6 @@ function EntryComponent() {
         </div>
       )}
     </div>
-     : <p>olmaz olsun böyle başlık</p>}
     </div>
   )
 }

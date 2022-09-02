@@ -6,10 +6,6 @@ import { selectedEntrys } from '../redux/actions/entryActions';
 import Card from 'react-bootstrap/Card';
 import { Col, Row } from 'react-bootstrap';
 import { TbDroplet } from 'react-icons/tb';
-import Button from 'react-bootstrap/Button';
-import DropdownButton from 'react-bootstrap/DropdownButton';
-import Dropdown from 'react-bootstrap/Dropdown';
-import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import { Link } from 'react-router-dom';
 import ReactPaginate from 'react-paginate';
 
@@ -18,24 +14,26 @@ function EntryDetail() {
   const entry = useSelector((state) => state.entry);
   const { title, total_page, tags } = entry;
   const { slug } = useParams();
-  const [items, setItems] = useState([]);
+  const PageNumbers = 1;  
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const fetchEntryDetail = async (currentPage) => {
-    const response = await axios.get(`
-    https://eksisozluk-api.herokuapp.com/api/baslik/${slug}?a=popular&p=${currentPage}`).catch(err => {
-      console.log("Err", err);
-    });
+    const response = await
+      axios.get(`https://eksisozluk-api.herokuapp.com/api/baslik/${slug}?a=popular&p=${currentPage}`)
+        .catch(err => {
+          console.log("Err", err);
+        });
     dispatch(selectedEntrys(response.data));
-  };
-  useEffect(() => {
-    if (slug && slug !== "") fetchEntryDetail();
-  }, [slug]);
+    };
   const handleClicked = async (data) => {
     let currentPage = data.selected + 1;
-    const commentFromServer = await fetchEntryDetail(currentPage)
-    setItems = (commentFromServer);
+    const commentFromServer = await fetchEntryDetail(currentPage);
+    PageNumbers = (commentFromServer);
   }
+  useEffect(() => {
+    if (slug && slug !== "") fetchEntryDetail();
+  }, [slug, PageNumbers]);
+
   return (
     <div>
       {Object.keys(entry).length === 0 ? (
@@ -63,6 +61,14 @@ function EntryDetail() {
                   breakClassName={"page-item"}
                   breakLinkClassName={"page-link"}
                   activeClassName={"active"}
+                  onClick={(clickEvent) => {
+                    console.log('onClick', clickEvent);
+                    // Return false to prevent standard page change,
+                    // return false; // --> Will do nothing.
+                    // return a number to choose the next page,
+                    // return 4; --> Will go to page 5 (index 4)
+                    // return nothing (undefined) to let standard behavior take place.
+                  }}
                 />
                 <Col lg={10}>
                   <Card.Title><h3>{title}</h3></Card.Title><br />
@@ -102,6 +108,7 @@ function EntryDetail() {
                     </Row>
                     <hr></hr>
                   </div>
+
                 );
               })}
             </Card.Body>

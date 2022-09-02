@@ -25,7 +25,7 @@ export default class App extends Component {
             </Col>
             <Col lg={9} xs={12} md={12} className="l">
               <Routes>
-              <Route path="/" element={<EntryComponent />} />
+                <Route path="/" element={<EntryComponent />} />
                 <Route path="baslik/:slug" element={<EntryDetail />} />
                 <Route path="entry/:id" element={<EntrySingle />} />
                 <Route path="biri/:author" element={<UserSearch />} />

@@ -13,7 +13,7 @@ export default class Header extends Component {
       <div>
     <Navbar bg="light" variant="light" expand="lg">
           <Container>
-            <Navbar.Brand href="/eksireactjs"><img style={{ width: "200px" }} src={eksi} /><code>via ReactJS</code></Navbar.Brand>
+            <Navbar.Brand href="/"><img style={{ width: "200px" }} src={eksi} /><code>via ReactJS</code></Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="navbarScroll">
           <Nav
