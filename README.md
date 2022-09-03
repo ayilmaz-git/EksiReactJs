@@ -4,3 +4,5 @@
 ## (arama bölümü)entry arama*, user arama*, başlık arama*
 ## user detail* api kaynaklı problem bulunmakta
 ## navbar linklendirme
+## mobilde mahvoluyoruz, birtakım css editler
+
